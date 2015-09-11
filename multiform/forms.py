@@ -25,7 +25,7 @@ class MultiForm(BaseForm):
     It can then be used like a regular form.
     """
 
-    base_fields = None  # Needed to bypass the absence of fancy metaclass
+    base_fields = {}  # Needed to bypass the absence of fancy metaclass
     _baseform_signature = OrderedDict([  # TODO: signature objects (pep 362)
         ('data', None),
         ('files', None),

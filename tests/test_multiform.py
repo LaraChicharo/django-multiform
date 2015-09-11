@@ -2,6 +2,7 @@ from collections import OrderedDict
 
 from django import test
 from django.core.exceptions import ImproperlyConfigured
+from django.core.urlresolvers import reverse
 
 from multiform import MultiForm
 
@@ -155,6 +156,8 @@ class TestMultiForm(test.TestCase):
 
 
 class TestMultiModelForm(test.TestCase):
+    def setUp(self):
+        self.client = test.Client()
 
     def test_dispatch_instance_none(self):
         """When passing instance=None, an empty object is created."""
@@ -199,3 +202,16 @@ class TestMultiModelForm(test.TestCase):
         self.assertEqual(d['topping'], Topping.objects.get())
         self.assertEqual(d['pizza'].restaurant.get(), Restaurant.objects.get())
         self.assertEqual(d['pizza'], Pizza.objects.get())
+
+    def test_wizard_form_view(self):
+        form_data = {
+            'new_topping_multimodel_view-current_step': '0',
+            'topping_multimodel_form-pizza-name': 'Bautista',
+            'topping_multimodel_form-topping-name': 'Marina and the diamonds',
+        }
+        response = self.client.post(reverse('new_topping'), data=form_data)
+        self.assertEqual(response.status_code, 200)
+        self.assertTrue(
+            response,
+            'Your multiform just completed a wizard'
+        )

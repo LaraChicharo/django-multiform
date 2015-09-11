@@ -9,4 +9,7 @@ DATABASES = {
 
 INSTALLED_APPS = [
     'tests',
+    'formtools',
 ]
+
+ROOT_URLCONF = 'tests.urls'
