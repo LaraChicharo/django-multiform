@@ -156,8 +156,6 @@ class TestMultiForm(test.TestCase):
 
 
 class TestMultiModelForm(test.TestCase):
-    def setUp(self):
-        self.client = test.Client()
 
     def test_dispatch_instance_none(self):
         """When passing instance=None, an empty object is created."""
